@@ -1,0 +1,39 @@
+{
+  "name": "ptero-wrapper",
+  "version": "0.0.1",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
+  },
+  "dependencies": {
+    "axios": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "@vitest/ui": "^3.2.4",
+    "c8": "^10.1.3",
+    "concurrently": "^9.2.0",
+    "tsup": "^8.5.0",
+    "typedoc": "^0.28.5",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "scripts": {
+    "dev:esm": "tsc -p tsconfig.esm.json --watch",
+    "dev:cjs": "tsc -p tsconfig.cjs.json --watch",
+    "dev:docs": "typedoc --out docs src --watch",
+    "dev": "concurrently \"npm:dev:esm\" \"npm:dev:cjs\" \"npm:dev:docs\"",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build": "npm run build:esm && npm run build:cjs",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "docs": "typedoc --out docs src"
+  },
+  "author": "",
+  "license": "GPL-3.0-only",
+  "description": "A TypeScript wrapper for the Pterodactyl API, providing a simple and type-safe interface for interacting with Pterodactyl servers."
+}

@@ -1,3 +1,6 @@
+# Docs
+docs/
+
 # Logs
 logs
 *.log
@@ -37,9 +40,6 @@ bower_components
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
-
-#docs
-docs/
 
 # Dependency directories
 node_modules/
@@ -106,12 +106,6 @@ dist
 # vuepress v2.x temp and cache directory
 .temp
 .cache
-
-# vitepress build output
-**/.vitepress/dist
-
-# vitepress cache directory
-**/.vitepress/cache
 
 # Docusaurus cache and generated files
 .docusaurus

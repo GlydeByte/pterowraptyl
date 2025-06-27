@@ -1,0 +1,41 @@
+import axios, { AxiosError, AxiosInstance } from "axios";
+
+export class PteroClient {
+    private baseUrl: string;
+    private apiKey: string;
+
+    private axiosInstance: AxiosInstance;
+
+    constructor(
+        baseUrl: string,
+        apiKey: string
+    ) {
+        this.baseUrl = baseUrl;
+        this.apiKey = apiKey;
+
+        baseUrl = this.baseUrl.trim().endsWith('/')
+            ? this.baseUrl.slice(0, -1)
+            : this.baseUrl;
+
+        this.axiosInstance = axios.create({
+            baseURL: baseUrl
+        });
+
+        // error handling TODO
+
+    }
+
+    public http(): Promise<AxiosInstance> {
+        if (this.apiKey) {
+            try {
+                this.axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${this.apiKey}`;
+                this.axiosInstance.defaults.headers.common["Content-Type"] = "application/json";
+                this.axiosInstance.defaults.headers.common["Accept"] = "Application/vnd.pterodactyl.v1+json";
+                return Promise.resolve(this.axiosInstance);
+            }
+        } else {
+            return Promise.reject(new Error("API key is not set."));
+        }
+    }
+    
+}

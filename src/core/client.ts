@@ -1,41 +1,87 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
 
 export class PteroClient {
-    private baseUrl: string;
-    private apiKey: string;
+  private baseUrl: string;
+  private apiKey: string;
 
-    private axiosInstance: AxiosInstance;
+  private axiosInstance: AxiosInstance;
 
-    constructor(
-        baseUrl: string,
-        apiKey: string
-    ) {
-        this.baseUrl = baseUrl;
-        this.apiKey = apiKey;
+  constructor(baseUrl: string, apiKey: string) {
+    this.baseUrl = baseUrl;
+    this.apiKey = apiKey;
 
-        baseUrl = this.baseUrl.trim().endsWith('/')
-            ? this.baseUrl.slice(0, -1)
-            : this.baseUrl;
+    baseUrl = this.baseUrl.trim().endsWith("/")
+      ? this.baseUrl.slice(0, -1)
+      : this.baseUrl;
 
-        this.axiosInstance = axios.create({
-            baseURL: baseUrl
-        });
+    baseUrl += "/api";
 
-        // error handling TODO
+    this.axiosInstance = axios.create({
+      baseURL: baseUrl,
+    });
 
+    // error handling TODO
+  }
+
+  public http(): Promise<AxiosInstance> {
+    if (this.apiKey) {
+      try {
+        this.axiosInstance.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${this.apiKey}`;
+        this.axiosInstance.defaults.headers.common["Content-Type"] =
+          "application/json";
+        this.axiosInstance.defaults.headers.common["Accept"] =
+          "Application/vnd.pterodactyl.v1+json";
+        return Promise.resolve(this.axiosInstance);
+      } catch (e) {
+        throw new Error("Authentication failed: " + (e as Error).message);
+      }
+    } else {
+      return Promise.reject(new Error("API key is not set."));
     }
+  }
+}
 
-    public http(): Promise<AxiosInstance> {
-        if (this.apiKey) {
-            try {
-                this.axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${this.apiKey}`;
-                this.axiosInstance.defaults.headers.common["Content-Type"] = "application/json";
-                this.axiosInstance.defaults.headers.common["Accept"] = "Application/vnd.pterodactyl.v1+json";
-                return Promise.resolve(this.axiosInstance);
-            }
-        } else {
-            return Promise.reject(new Error("API key is not set."));
-        }
+export class PteroApp {
+  private baseUrl: string;
+  private apiKey: string;
+
+  private axiosInstance: AxiosInstance;
+
+  constructor(baseUrl: string, apiKey: string) {
+    this.baseUrl = baseUrl;
+    this.apiKey = apiKey;
+
+    baseUrl = this.baseUrl.trim().endsWith("/")
+      ? this.baseUrl.slice(0, -1)
+      : this.baseUrl;
+
+    baseUrl += "/api";
+
+    this.axiosInstance = axios.create({
+      baseURL: baseUrl,
+    });
+
+    // error handling TODO
+  }
+
+  public http(): Promise<AxiosInstance> {
+    if (this.apiKey) {
+      try {
+        this.axiosInstance.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${this.apiKey}`;
+        this.axiosInstance.defaults.headers.common["Content-Type"] =
+          "application/json";
+        this.axiosInstance.defaults.headers.common["Accept"] =
+          "Application/vnd.pterodactyl.v1+json";
+        return Promise.resolve(this.axiosInstance);
+      } catch (e) {
+        throw new Error("Authentication failed: " + (e as Error).message);
+      }
+    } else {
+      return Promise.reject(new Error("API key is not set."));
     }
-    
+  }
 }

@@ -12,17 +12,32 @@ export interface Account {
 };
 
 export interface AccountResponse {
-    object: string;
     attributes: Account;
 }
 
 export interface TwoFactor {
     data: {
         image_url_data: string;
+        secret: string;
     };
 }
 
 export interface TwoFactorResponse {
-    object: string;
     data: TwoFactor;
 };
+
+export interface TwoFactorEnableRequest {
+    code: string;
+    password: string;
+}
+
+export interface TwoFactorEnable {
+    object: string;
+    attributes: {
+        tokens: string[];
+    };
+};
+
+export interface TwoFactorDisable {
+    password: string;
+}

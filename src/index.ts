@@ -6,7 +6,7 @@ export { PteroClient, PteroApp } from "./core/client.js";
 export { AccountsModule } from "./modules/client/AccountsModule.js";
 
 //exports of types
-export { Account, AccountResponse, TwoFactor, TwoFactorResponse } from "./types/client/accounts/accounts.js";
+export { Account, AccountResponse, TwoFactor, TwoFactorResponse, TwoFactorEnableRequest, TwoFactorEnable, TwoFactorDisable } from "./types/client/accounts/accounts.js";
 /**
  * Main class for Pterodactyl API wrapper.
  * Everything is accessible through this class.

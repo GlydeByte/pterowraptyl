@@ -1,12 +1,39 @@
 import { PteroClient, PteroApp } from "./core/client.js";
 import { AccountsModule } from "./modules/client/AccountsModule.js";
+import { ServersModule } from "./modules/client/ServersModule.js";
 
 // exports
 export { PteroClient, PteroApp } from "./core/client.js";
 export { AccountsModule } from "./modules/client/AccountsModule.js";
+export { ServersModule } from "./modules/client/ServersModule.js";
 
 //exports of types
-export { Account, AccountResponse, TwoFactor, TwoFactorResponse, TwoFactorEnableRequest, TwoFactorEnable, TwoFactorDisable } from "./types/client/accounts/accounts.js";
+export {
+  Account,
+  AccountResponse,
+  TwoFactor,
+  TwoFactorResponse,
+  TwoFactorEnableRequest,
+  TwoFactorEnable,
+  TwoFactorDisable,
+} from "./types/client/accounts/accounts.js";
+export {
+  Server,
+  ServerResponse,
+  IdentifierRequest,
+  ServerAttributes,
+  ServerMeta,
+  ServerLimits,
+  ServerFeatureLimits,
+  ServerRelationships,
+  SftpDetails,
+  AllocationsList,
+  Allocation,
+  AllocationAttributes,
+  Websocket
+} from "./types/client/servers/servers.js";
+
+export { IncludeParameters } from "./types/enums.js";
 /**
  * Main class for Pterodactyl API wrapper.
  * Everything is accessible through this class.
@@ -42,6 +69,7 @@ export class Ptero {
    * This module provides methods to access account details, 2fa, update account information, etc.
    */
   public accounts?: AccountsModule;
+  public servers?: ServersModule;
 
   constructor(client?: PteroClient, app?: PteroApp) {
     this.client = client;
@@ -49,6 +77,7 @@ export class Ptero {
 
     if (this.client) {
       this.accounts = new AccountsModule(this.client);
+      this.servers = new ServersModule(this.client);
     }
   }
 }

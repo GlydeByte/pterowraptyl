@@ -25,3 +25,15 @@ export enum IncludeParameters {
     CONFIG = "config",
     SCRIPT = "script"
 };
+
+export enum FilterParameters {
+    EMAIL = "email",
+    UUID = "uuid",
+    USERNAME = "username",
+    EXTERNAL_ID = "external_id"
+};
+
+export enum SortParameters {
+    ID = "id",
+    UUID = "uuid"
+}

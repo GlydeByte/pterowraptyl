@@ -10,7 +10,7 @@ export function includeBuilder(allowedIncludes: IncludeParameters[], include: In
             throw new Error(`Invalid include parameter: ${i}. Allowed parameters are: ${allowedIncludes.join(", ")}`);
         } else {
             // If the include is valid, we can proceed
-            includeString += `${i},`;
+            includeString += `${encodeURIComponent(i)},`;
         }
     })
     // Remove the last comma

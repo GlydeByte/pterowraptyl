@@ -1,11 +1,23 @@
 import { PteroClient, PteroApp } from "./core/client.js";
 import { AccountsModule } from "./modules/AccountsModule.js";
+import { ClientServersModule } from "./modules/ClientServersModule.js";
+import { EggsModule } from "./modules/EggsModule.js";
+import { LocationsModule } from "./modules/LocationsModule.js";
+import { NestsModule } from "./modules/NestsModule.js";
+import { NodesModule } from "./modules/NodesModule.js";
 import { ServersModule } from "./modules/ServersModule.js";
+import { UsersModule } from "./modules/UsersModule.js";
 
 // exports
 export { PteroClient, PteroApp } from "./core/client.js";
 export { AccountsModule } from "./modules/AccountsModule.js";
+export { ClientServersModule } from "./modules/ClientServersModule.js";
+export { EggsModule } from "./modules/EggsModule.js";
+export { LocationsModule } from "./modules/LocationsModule.js";
+export { NestsModule } from "./modules/NestsModule.js";
+export { NodesModule } from "./modules/NodesModule.js";
 export { ServersModule } from "./modules/ServersModule.js";
+export { UsersModule } from "./modules/UsersModule.js";
 
 //exports of types
 export {
@@ -31,10 +43,12 @@ export {
   Allocation,
   AllocationAttributes,
   Websocket,
-  ServerResources
+  ServerResources,
 } from "./types/servers/servers.js";
+export { User, UserAttributes, UsersList } from "./types/users/users.js";
 
-export { IncludeParameters } from "./types/enums.js";
+export { IncludeParameters, FilterParameters, SortParameters } from "./types/enums.js";
+export { Pagination, Meta, PaginationOptions, PaginationLinks } from "./types/common.js";
 /**
  * Main class for Pterodactyl API wrapper.
  * Everything is accessible through this class.
@@ -70,7 +84,14 @@ export class Ptero {
    * This module provides methods to access account details, 2fa, update account information, etc.
    */
   public accounts?: AccountsModule;
+  public clientServers?: ClientServersModule;
+
+  public eggs?: EggsModule;
+  public locations?: LocationsModule;
+  public nests?: NestsModule;
+  public nodes?: NodesModule;
   public servers?: ServersModule;
+  public users?: UsersModule;
 
   constructor(client?: PteroClient, app?: PteroApp) {
     this.client = client;
@@ -78,7 +99,16 @@ export class Ptero {
 
     if (this.client) {
       this.accounts = new AccountsModule(this.client);
-      this.servers = new ServersModule(this.client);
+      this.clientServers = new ClientServersModule(this.client);
+    }
+
+    if (this.app) {
+      this.eggs = new EggsModule(this.app);
+      this.locations = new LocationsModule(this.app);
+      this.nests = new NestsModule(this.app);
+      this.nodes = new NodesModule(this.app);
+      this.servers = new ServersModule(this.app);
+      this.users = new UsersModule(this.app);
     }
   }
 }

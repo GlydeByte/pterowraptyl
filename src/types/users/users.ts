@@ -26,3 +26,7 @@ export interface UsersList {
     data: User[];
     meta: Meta;
 }
+
+export interface UsersResponse {
+    data: User[];
+}

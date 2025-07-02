@@ -5,18 +5,22 @@ import {
   SortParameters,
 } from "../../types/enums.js";
 import { PaginationOptions } from "../../types/common.js";
-import { UsersList } from "../../types/users/users.js";
-import { includeBuilder } from "../../utils/includeBuilder.js";
-import { filterBuilder } from "../../utils/filterBuilder.js";
-import { sortBuilder } from "../../utils/sortBuilder.js";
+import { UserAttributes, UsersResponse } from "../../types/users/users.js";
+import {
+  includeBuilder,
+  filterBuilder,
+  sortBuilder,
+  paginationBuilder,
+  queryBuilder,
+} from "../../utils/builders.js";
 
 export async function fetchAll(
   client: PteroApp,
+  sort?: SortParameters,
   include?: IncludeParameters[],
   filter?: Record<FilterParameters, string>,
-  sort?: SortParameters,
   pagination?: PaginationOptions
-): Promise<UsersList> {
+): Promise<UserAttributes[]> {
   const includeString = includeBuilder(
     [IncludeParameters.SERVERS],
     include || []
@@ -30,8 +34,23 @@ export async function fetchAll(
     ],
     filter || {}
   );
-  const sortString = sortBuilder([
-    SortParameters.ID,
-    SortParameters.UUID
-  ], sort || "")
+  const sortString = sortBuilder(
+    [SortParameters.ID, SortParameters.UUID],
+    sort || ""
+  );
+
+  const paginationString = paginationBuilder(pagination);
+  const queryString = queryBuilder([
+    includeString,
+    filterString,
+    sortString,
+    paginationString,
+  ]);
+
+  console.log("Query String: ", queryString);
+  const http = await client.http();
+  const response = await http.get<UsersResponse>(`/application/users/${queryString}`);
+  
+  // Extrahujeme pouze attributes z každého user objektu
+  return response.data.data.map(user => user.attributes);
 }

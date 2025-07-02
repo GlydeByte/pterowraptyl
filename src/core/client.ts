@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
+import { PteroError } from "./error.js";
 
 export class PteroClient {
   private baseUrl: string;
@@ -20,7 +21,16 @@ export class PteroClient {
       baseURL: baseUrl,
     });
 
-    // error handling TODO
+    this.setupErrorHandling();
+  }
+
+  private setupErrorHandling(): void {
+    this.axiosInstance.interceptors.response.use(
+      (response) => response,
+      (error: AxiosError) => {
+        throw PteroError.fromAxiosError(error);
+      }
+    );
   }
 
   public http(): Promise<AxiosInstance> {
@@ -63,9 +73,17 @@ export class PteroApp {
       baseURL: baseUrl,
     });
 
-    // error handling TODO
+    this.setupErrorHandling();
   }
 
+  private setupErrorHandling(): void {
+    this.axiosInstance.interceptors.response.use(
+      (response) => response,
+      (error: AxiosError) => {
+        throw PteroError.fromAxiosError(error);
+      }
+    );
+  }
   public http(): Promise<AxiosInstance> {
     if (this.apiKey) {
       try {

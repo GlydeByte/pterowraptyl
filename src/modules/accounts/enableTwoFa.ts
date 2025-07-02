@@ -1,5 +1,5 @@
-import { PteroClient } from "../../../core/client.js";
-import { TwoFactorEnableRequest, TwoFactorEnable } from "../../../types/client/accounts/accounts.js";
+import { PteroClient } from "../../core/client.js";
+import { TwoFactorEnableRequest, TwoFactorEnable } from "../../types/accounts/accounts.js";
 
 export async function enableTwoFa(client: PteroClient, enableTwoFaData: TwoFactorEnableRequest): Promise<{ tokens: string[] }> {
     const http = await client.http();

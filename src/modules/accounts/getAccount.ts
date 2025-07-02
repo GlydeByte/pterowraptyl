@@ -1,5 +1,5 @@
-import { PteroClient } from "../../../core/client.js";
-import { Account, AccountResponse } from "../../../types/client/accounts/accounts.js";
+import { PteroClient } from "../../core/client.js";
+import { Account, AccountResponse } from "../../types/accounts/accounts.js";
 
 
 export async function getAccount(client: PteroClient): Promise<Account> {

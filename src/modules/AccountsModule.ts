@@ -1,10 +1,10 @@
-import { PteroClient } from "../../core/client.js";
+import { PteroClient } from "../core/client.js";
 
-import { Account, TwoFactorDisable, TwoFactor } from "../../types/client/accounts/accounts.js";
+import { Account, TwoFactorDisable, TwoFactor } from "../types/accounts/accounts.js";
 import { getAccount } from "./accounts/getAccount.js";
 import { getTwoFa } from "./accounts/getTwoFa.js";
 import { enableTwoFa } from "./accounts/enableTwoFa.js";
-import { TwoFactorEnableRequest } from "../../types/client/accounts/accounts.js";
+import { TwoFactorEnableRequest } from "../types/accounts/accounts.js";
 import { disableTwoFa } from "./accounts/disableTwoFa.js";
 /**
  * Module for accessing Pterodactyl client account endpoints.

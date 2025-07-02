@@ -1,4 +1,4 @@
-import { ServerSignals } from '../../enums.js';
+import { ServerSignals } from '../enums.js';
 
 export interface ServerLimits {
     memory: number;
@@ -84,3 +84,20 @@ export interface Websocket {
 export interface WebsocketResponse {
     data: Websocket;
 }
+
+export interface ServerResources {
+    object: "stats";
+    current_state: string;
+    is_suspended: boolean;
+    resources: {
+        memory_bytes: number;
+        cpu_absolute: number;
+        disk_bytes: number;
+        network_rx_bytes: number;
+        network_tx_bytes: number;
+    };
+}
+
+export interface ServerResourcesResponse {
+    attributes: ServerResources;
+};

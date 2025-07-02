@@ -1,5 +1,5 @@
-import { PteroClient } from "../../../core/client.js";
-import { TwoFactor, TwoFactorResponse } from "../../../types/client/accounts/accounts.js";
+import { PteroClient } from "../../core/client.js";
+import { TwoFactor, TwoFactorResponse } from "../../types/accounts/accounts.js";
 
 
 

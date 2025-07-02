@@ -1,11 +1,11 @@
 import { PteroClient, PteroApp } from "./core/client.js";
-import { AccountsModule } from "./modules/client/AccountsModule.js";
-import { ServersModule } from "./modules/client/ServersModule.js";
+import { AccountsModule } from "./modules/AccountsModule.js";
+import { ServersModule } from "./modules/ServersModule.js";
 
 // exports
 export { PteroClient, PteroApp } from "./core/client.js";
-export { AccountsModule } from "./modules/client/AccountsModule.js";
-export { ServersModule } from "./modules/client/ServersModule.js";
+export { AccountsModule } from "./modules/AccountsModule.js";
+export { ServersModule } from "./modules/ServersModule.js";
 
 //exports of types
 export {
@@ -16,7 +16,7 @@ export {
   TwoFactorEnableRequest,
   TwoFactorEnable,
   TwoFactorDisable,
-} from "./types/client/accounts/accounts.js";
+} from "./types/accounts/accounts.js";
 export {
   Server,
   ServerResponse,
@@ -30,8 +30,9 @@ export {
   AllocationsList,
   Allocation,
   AllocationAttributes,
-  Websocket
-} from "./types/client/servers/servers.js";
+  Websocket,
+  ServerResources
+} from "./types/servers/servers.js";
 
 export { IncludeParameters } from "./types/enums.js";
 /**

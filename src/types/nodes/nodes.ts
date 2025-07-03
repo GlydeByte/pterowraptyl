@@ -41,3 +41,51 @@ export interface NodeResponse {
 export interface NodeIdRequest {
     id?: number;
 };
+
+export interface NodeConfig {
+    debug: boolean;
+    uuid: string;
+    token_id: string;
+    token: string;
+    api: {
+        host: string;
+        port: number;
+        ssl: {
+            enabled: boolean;
+            cert: string;
+            key: string;
+        };
+        upload_limit: number;
+    };
+    system: {
+        data: string;
+        sftp: {
+            bind_port: number;
+        };
+    };
+    remote: string;
+}
+
+export interface NodeRequest {
+    name: string;
+    location_id: number;
+    scheme: string;
+    memory: number;
+    memory_overallocate: number;
+    disk: number;
+    disk_overallocate: number;
+    upload_size: number;
+    daemon_sftp: number;
+    daemon_listen: number;
+
+    /**
+     * only for updating node
+     */
+    maintenance_mode?: boolean;
+    
+    /**
+     * Only for updating node ... updateNode({});
+     */
+    behind_proxy?: boolean;
+}
+   

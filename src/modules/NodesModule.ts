@@ -1,7 +1,11 @@
 import { PteroApp } from "../core/client.js";
 
 import { fetchAll } from "./nodes/fetchAll.js";
-import { NodeAttributes, NodeIdRequest } from "../types/nodes/nodes.js";
+import { fetchOne } from "./nodes/fetchOne.js";
+import { fetchConfiguration } from "./nodes/fetchConfiguration.js";
+import { createNode } from "./nodes/createNode.js";
+
+import { NodeAttributes, NodeConfig, NodeIdRequest } from "../types/nodes/nodes.js";
 import { IncludeParameters } from "../types/enums.js";
 import { PaginationOptions } from "../types/common.js";
 /**
@@ -34,5 +38,72 @@ export class NodesModule {
     pagination?: PaginationOptions
   ): Promise<NodeAttributes[]> {
     return fetchAll(this.client, include, pagination);
+  }
+
+  /**
+   * Fetches a single node by its ID with optional include parameters.
+   * @param data - The request object containing the node ID.
+   * @param include - Include parameters to specify related resources to include in the response.
+   * Allowed values are IncludeParameters.SERVERS, IncludeParameters.ALLOCATIONS, and IncludeParameters.LOCATION.
+   * If not provided, no related resources are included.
+   * @example
+   * ```ts
+   * //fetching a single node by its ID with all include parameters
+   * const node = await ptero.nodes.fetchOne({ id: "node-id" },
+   * ["allocations", "servers", "location"]);
+   * console.log("Node:", node);
+   * ```
+   * @returns {Promise<NodeAttributes>} - A promise that resolves to the attributes of the requested node. 
+   */
+  fetchOne(
+    data: NodeIdRequest,
+    include?: IncludeParameters[]
+  ): Promise<NodeAttributes> {
+    return fetchOne(this.client, data, include);
+  }
+
+  /**
+   * Fetches the configuration of a node by its ID.
+   * @param data - The request object containing the node ID.
+   * @example
+   * ```ts
+   * // fetching config of node 1
+   * const config = await ptero.nodes.fetchConfiguration({id: 1});
+   * console.log("Node 1 Configuration:", config);
+   * ```
+   * @returns {Promise<NodeConfig>} - A promise that resolves to the configuration of the requested node.
+   */
+  fetchConfiguration(data: NodeIdRequest): Promise<NodeConfig> {
+    return fetchConfiguration(this.client, data);
+  }
+  
+  /**
+   * Creates a new node with the specified attributes.
+   * This method allows you to create a new node in the Pterodactyl panel
+   * @param data - The attributes of the node to create.
+   * This should include all required fields as per the Pterodactyl API documentation.
+   * @example
+   * ```ts
+   * const newNode = await ptero.nodes.createNode({
+   *    name: "New Node",
+   *     location_id: 1,
+   *     fqdn: "node2.example.com",
+   *     scheme: "https",
+   *     memory: 10240,
+   *     memory_overallocate: 0,
+   *     disk: 50000,
+   *     disk_overallocate: 0,
+   *     upload_size: 100,
+   *     daemon_sftp: 2022,
+   *     daemon_listen: 8080,
+   * });
+   * console.log("New Node Created:", newNode);
+   * ```
+   * @returns {Promise<NodeAttributes>} - A promise that resolves to the attributes of the created node. 
+   */ 
+  createNode(
+    data: NodeAttributes
+  ): Promise<NodeAttributes> {
+    return createNode(this.client, data);
   }
 }

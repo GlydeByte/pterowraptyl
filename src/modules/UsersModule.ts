@@ -9,11 +9,33 @@ import { UserAttributes, UserIdRequest, UserRequest } from "../types/users/users
 import { fetchAll } from "./users/fetchAll.js";
 import { fetchOne } from "./users/fetchOne.js";
 import { createUser } from "./users/createUser.js";
+import { updateUser } from "./users/updateUser.js";
 import { deleteUser } from "./users/deleteUser.js";
 
+
 /**
- * Module for accessing Pterodactyl users endpoints.
- * This module provides methods to access user details, create users, update users, etc.
+ * The `UsersModule` class provides methods for managing users in the Pterodactyl application.
+ * It allows you to fetch, create, update, and delete users, as well as apply sorting, filtering,
+ * and pagination to user queries.
+ *
+ * @module UsersModule
+ * @remarks
+ * This module is designed to interact with the Pterodactyl API via a provided `PteroApp` client instance.
+ * All methods return Promises and are intended for asynchronous usage.
+ *
+ * @example
+ * ```ts
+ * const usersModule = new UsersModule(pteroAppClient);
+ * const users = await usersModule.fetchAll();
+ * const user = await usersModule.fetchOne({ id: 1 });
+ * const newUser = await usersModule.createUser({ ... });
+ * const updatedUser = await usersModule.updateUser({ ... });
+ * const deleted = await usersModule.deleteUser({ id: 1 });
+ * ```
+ *
+ * @see {@link https://pterodactyl.io/} for more information about the Pterodactyl API.
+ *
+ * @public
  */
 export class UsersModule {
   constructor(private client: PteroApp) {
@@ -110,7 +132,18 @@ export class UsersModule {
   ): Promise<UserAttributes> {
     return createUser(this.client, data);
   }
+
+
+  /**
+   * Updates a user's information using the provided user data.
+   */
+  updateUser(
+    data: UserRequest
+  ): Promise<UserAttributes> {
+    return updateUser(this.client, data);
+  }
   
+
   /**
    * Deletes a user by their ID.
    * This method will permanently remove the user from the system.

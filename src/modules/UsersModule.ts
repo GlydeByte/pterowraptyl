@@ -5,8 +5,12 @@ import {
   FilterParameters,
 } from "../types/enums.js";
 import { PaginationOptions } from "../types/common.js";
-import { UserAttributes } from "../types/users/users.js";
+import { UserAttributes, UserIdRequest, UserRequest } from "../types/users/users.js";
 import { fetchAll } from "./users/fetchAll.js";
+import { fetchOne } from "./users/fetchOne.js";
+import { createUser } from "./users/createUser.js";
+import { deleteUser } from "./users/deleteUser.js";
+
 /**
  * Module for accessing Pterodactyl users endpoints.
  * This module provides methods to access user details, create users, update users, etc.
@@ -42,8 +46,8 @@ export class UsersModule {
    * );
    * console.log(users);
    * ```
-   * @returns {Promise<UserAttributes[]>} - A promise that resolves to an array of user attributes. 
-   * 
+   * @returns {Promise<UserAttributes[]>} - A promise that resolves to an array of user attributes.
+   *
    */
   fetchAll(
     sort?: SortParameters,
@@ -52,5 +56,77 @@ export class UsersModule {
     pagination?: PaginationOptions
   ): Promise<UserAttributes[]> {
     return fetchAll(this.client, sort, include, filter, pagination);
+  }
+
+  /**
+   * 
+   * @param data - UserIdRequest containing either id or external_id of the user to fetch.
+   * If both are provided, id will be used.
+   * If neither is provided, an error will be thrown.
+   * @param include - Include parameters to specify related resources to include in the response.
+   * Allowed values are IncludeParameters.SERVERS.
+   * If not provided, no related resources are included.
+   * @example
+   * ```ts
+   * const user = await ptero.users.fetchOne({ id: 1 });
+   * console.log(user);
+   *
+   * const userWithExternalId = await ptero.users.fetchOne({ external_id: "remoteId1" });
+   * console.log(userWithExternalId);
+   * @returns {Promise<UserAttributes>} - A promise that resolves to the user attributes.
+   * 
+   */
+  fetchOne(
+    data: UserIdRequest,
+    include?: IncludeParameters[]
+  ): Promise<UserAttributes> {
+    return fetchOne(this.client, data, include);
+  }
+
+  /**
+   * 
+   * @param data - UserRequest containing user details to create a new user.
+   * The email, username, first_name, and last_name fields are required.
+   * The password field is optional but recommended.
+   * If external_id is provided, it will be used as the user's external identifier.
+   * The root_admin field is optional and defaults to false.
+   * @example
+   * ```ts
+   * const newUser = await ptero.users.createUser({
+   *   username: "ExampleUser",
+   *   email: "example@example.com",
+   *   first_name: "Example",
+   *   last_name: "Example",
+   *   password: "Example123*",
+   *   external_id: "ExampleExternalID",
+   *   root_admin: false,
+   * });
+   * console.log("New User Created:", newUser);
+   * ```
+   * @returns {Promise<UserAttributes>} - A promise that resolves to the created user's attributes.
+   */
+  createUser(
+    data: UserRequest
+  ): Promise<UserAttributes> {
+    return createUser(this.client, data);
+  }
+  
+  /**
+   * Deletes a user by their ID.
+   * This method will permanently remove the user from the system.
+   * * @example
+   * ```ts
+   * const deletedUser = await ptero.users.deleteUser({ id: "7" });
+   * console.log("Deleted User:", deletedUser);
+   * ```
+   * @param data - UserIdRequest containing the id of the user to delete.
+   * If the id is not provided, an error will be thrown.
+   * @returns {Promise<boolean>} - A promise that resolves to true if the user was successfully deleted.
+   * If the user could not be deleted, it will throw an error.
+   */
+  deleteUser(
+    data: UserIdRequest
+  ): Promise<boolean> {
+    return deleteUser(this.client, data);
   }
 }

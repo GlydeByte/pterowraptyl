@@ -50,7 +50,6 @@ export async function fetchAll(
   console.log("Query String: ", queryString);
   const http = await client.http();
   const response = await http.get<UsersResponse>(`/application/users/${queryString}`);
-  
-  // Extrahujeme pouze attributes z každého user objektu
+
   return response.data.data.map(user => user.attributes);
 }

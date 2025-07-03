@@ -47,7 +47,6 @@ export async function fetchAll(
     paginationString,
   ]);
 
-  console.log("Query String: ", queryString);
   const http = await client.http();
   const response = await http.get<UsersResponse>(`/application/users/${queryString}`);
 

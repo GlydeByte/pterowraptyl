@@ -15,6 +15,16 @@ export interface UserAttributes {
     updated_at: string;
 }
 
+export interface UserUpdateRequest {
+    id: number;
+    email: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    language?: string;
+    password?: string;
+}
+
 export interface User {
     object: 'user';
     attributes: UserAttributes;

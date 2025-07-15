@@ -5,7 +5,7 @@ import {
   FilterParameters,
 } from "../types/enums.js";
 import { PaginationOptions } from "../types/common.js";
-import { UserAttributes, UserIdRequest, UserRequest } from "../types/users/users.js";
+import { UserAttributes, UserUpdateRequest, UserIdRequest, UserRequest } from "../types/users/users.js";
 import { fetchAll } from "./users/fetchAll.js";
 import { fetchOne } from "./users/fetchOne.js";
 import { createUser } from "./users/createUser.js";
@@ -136,9 +136,23 @@ export class UsersModule {
 
   /**
    * Updates a user's information using the provided user data.
+   * @param data - UserUpdateRequest containing the user's id and the fields to update.
+   * @example
+   * ```ts
+   * const updateUser = await ptero.users.updateUser({
+   *   id: 1,
+   *   username: "new_username",
+   *   email: "example@example.com",
+   *   first_name: "new_first_name",
+   *   last_name: "new_last_name",
+   * });
+   * console.log("Update User:", updateUser);
+   * ```
+   * @returns {Promise<UserAttributes>} - A promise that resolves to the updated user's attributes.
+   * If the user could not be updated, it will throw an error.
    */
   updateUser(
-    data: UserRequest
+    data: UserUpdateRequest
   ): Promise<UserAttributes> {
     return updateUser(this.client, data);
   }

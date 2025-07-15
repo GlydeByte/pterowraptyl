@@ -45,7 +45,7 @@ export {
   Websocket,
   ServerResources,
 } from "./types/servers/servers.js";
-export { User, UserAttributes, UsersList, UserIdRequest, UserRequest } from "./types/users/users.js";
+export { User, UserAttributes, UserUpdateRequest, UsersList, UserIdRequest, UserRequest } from "./types/users/users.js";
 export { NodeAttributes, NodeIdRequest, NodeConfig } from "./types/nodes/nodes.js";
 export { IncludeParameters, FilterParameters, SortParameters } from "./types/enums.js";
 export { Pagination, Meta, PaginationOptions, PaginationLinks } from "./types/common.js";

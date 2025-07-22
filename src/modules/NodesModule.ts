@@ -4,8 +4,10 @@ import { fetchAll } from "./nodes/fetchAll.js";
 import { fetchOne } from "./nodes/fetchOne.js";
 import { fetchConfiguration } from "./nodes/fetchConfiguration.js";
 import { createNode } from "./nodes/createNode.js";
+import { updateNode } from "./nodes/updateNode.js";
+import { deleteNode } from "./nodes/deleteNode.js";
 
-import { NodeAttributes, NodeConfig, NodeIdRequest } from "../types/nodes/nodes.js";
+import { NodeAttributes, NodeUpdateRequest, NodeConfig, NodeIdRequest } from "../types/nodes/nodes.js";
 import { IncludeParameters } from "../types/enums.js";
 import { PaginationOptions } from "../types/common.js";
 /**
@@ -76,7 +78,7 @@ export class NodesModule {
   fetchConfiguration(data: NodeIdRequest): Promise<NodeConfig> {
     return fetchConfiguration(this.client, data);
   }
-  
+
   /**
    * Creates a new node with the specified attributes.
    * This method allows you to create a new node in the Pterodactyl panel
@@ -100,10 +102,48 @@ export class NodesModule {
    * console.log("New Node Created:", newNode);
    * ```
    * @returns {Promise<NodeAttributes>} - A promise that resolves to the attributes of the created node. 
-   */ 
+   */
   createNode(
     data: NodeAttributes
   ): Promise<NodeAttributes> {
     return createNode(this.client, data);
   }
+
+  /**
+   * Updates an existing node with the specified attributes.
+   * @param data - The request object containing the node ID and attributes to update.
+   * @example
+   * ```ts
+   * const updatedNode = await ptero.nodes.updateNode({
+   *     id: 1,
+   *     name: "Updated Node Name",
+   *     description: "Updated description for the node.",
+   * });
+   * console.log("Node Updated:", updatedNode);
+   * ```
+   * @returns {Promise<NodeAttributes>} - A promise that resolves to the updated attributes of the node. 
+   */
+  updateNode(
+    data: NodeUpdateRequest
+  ): Promise<NodeAttributes> {
+    return updateNode(this.client, data);
+  }
+
+  /**
+   * Deletes a node by its ID.
+   * @param data - The request object containing the node ID to delete.
+   * @example
+   * ```ts
+   * //deleting a node by its ID
+   * const isDeleted = await ptero.nodes.deleteNode({ id: "node-id" });
+   * console.log("Node Deleted:", isDeleted);
+   * ```
+   * @returns {Promise<boolean>} - A promise that resolves to true if the node was successfully deleted, otherwise false.
+   */
+  deleteNode(
+    data: NodeIdRequest
+  ): Promise<boolean> {
+    return deleteNode(this.client, data);
+  }
+
 }

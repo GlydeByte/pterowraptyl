@@ -34,6 +34,27 @@ export interface NodeAttributes {
     updated_at: string;
 }
 
+export interface NodeUpdateRequest {
+    id?: number;
+    name?: string;
+    description?: string;
+    location_id?: number;
+    fqdn?: string;
+    scheme?: string;
+    behind_proxy?: boolean;
+    public?: boolean;
+    daemon_base?: string;
+    daemon_sftp?: number;
+    daemon_listen?: number;
+    memory?: number;
+    memory_overallocate?: number;
+    disk?: number;
+    disk_overallocate?: number;
+    upload_size?: number;
+    maintenance_mode?: boolean;
+}
+
+
 export interface NodeResponse {
     data: Node[];
 }

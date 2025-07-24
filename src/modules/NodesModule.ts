@@ -114,12 +114,20 @@ export class NodesModule {
    * @param data - The request object containing the node ID and attributes to update.
    * @example
    * ```ts
-   * const updatedNode = await ptero.nodes.updateNode({
-   *     id: 1,
-   *     name: "Updated Node Name",
-   *     description: "Updated description for the node.",
+   * const node = await ptero.nodes.updateNode({
+   *   id: 2,
+   *   name: "Updated_Node",
+   *   location_id: 1,
+   *   fqdn: "node2.example.com",
+   *   scheme: "https",
+   *   memory: 10240,
+   *   memory_overallocate: 0,
+   *   disk: 50000,
+   *   disk_overallocate: 0,
+   *   daemon_sftp: 2022,
+   *   daemon_listen: 8080,
    * });
-   * console.log("Node Updated:", updatedNode);
+   * console.log("Update:", node);
    * ```
    * @returns {Promise<NodeAttributes>} - A promise that resolves to the updated attributes of the node. 
    */

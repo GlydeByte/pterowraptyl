@@ -18,6 +18,8 @@ export class PteroError extends Error {
 
     const errorData = axiosError.response?.data as any;
 
+    //console.log("Error Data:", errorData);
+
     if (errorData?.data?.errors && errorData.data.errors.length > 0) {
       const firstError = errorData.data.errors[0];
       errorName = firstError.code || "Unknown Error";

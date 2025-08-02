@@ -1,9 +1,24 @@
 import { Meta } from '../common.js';
+import { AllocationAttributes } from '../servers/servers.js';
 
 export interface NodesList {
     object: 'list';
     data: Node[];
     meta: Meta;
+}
+
+export interface AllocationList {
+    object: 'list';
+    data: Allocation[];
+    meta: Meta;
+}
+export interface Allocation {
+    object: 'allocation';
+    attributes: AllocationAttributes;
+}
+
+export interface AllocationResponse {
+    data: Allocation[];
 }
 
 export interface Node {

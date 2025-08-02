@@ -57,7 +57,7 @@ export {
   NodeAttributes,
   NodeIdRequest,
   NodeConfig,
-  NodeUpdateRequest,
+  NodeUpdateRequest
 } from "./types/nodes/nodes.js";
 export {
   IncludeParameters,

@@ -6,8 +6,10 @@ import { fetchConfiguration } from "./nodes/fetchConfiguration.js";
 import { createNode } from "./nodes/createNode.js";
 import { updateNode } from "./nodes/updateNode.js";
 import { deleteNode } from "./nodes/deleteNode.js";
+import { fetchAllocations } from "./nodes/allocations/fetchAll.js";
 
 import { NodeAttributes, NodeUpdateRequest, NodeConfig, NodeIdRequest } from "../types/nodes/nodes.js";
+import { AllocationAttributes } from "../types/servers/servers.js";
 import { IncludeParameters } from "../types/enums.js";
 import { PaginationOptions } from "../types/common.js";
 /**
@@ -152,6 +154,28 @@ export class NodesModule {
     data: NodeIdRequest
   ): Promise<boolean> {
     return deleteNode(this.client, data);
+  }
+
+  /**
+   * 
+   * @param data - The request object containing the node ID to fetch allocations for.
+   * @param pagination - Pagination options to control the number of results returned.
+   * @example
+   * ```ts
+   * // Fetching allocations for a node with ID 1
+   * const allocations = await ptero.nodes.fetchAllocations({ id: 1 }, {
+   *  page: 1,
+   *  per_page: 25
+   * });
+   * ```
+   * @param pagination - Pagination options to control the number of results returned.
+   * @returns A promise that resolves to an array of allocation attributes.
+   */
+  fetchAllocations(
+    data: NodeIdRequest,
+    pagination?: PaginationOptions
+  ): Promise<AllocationAttributes[]> {
+    return fetchAllocations(this.client, data, pagination);
   }
 
 }

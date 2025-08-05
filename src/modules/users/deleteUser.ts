@@ -9,7 +9,11 @@ export async function deleteUser(
     throw new Error("User ID is required to delete a user.");
   }
   const http = await client.http();
-  await http.delete<void>(`/application/users/${data.id}`);
+  const response = await http.delete<void>(`/application/users/${data.id}`);
+
+  if (response.status !== 204) {
+    throw new Error("Failed to delete user.");
+  }
 
   return true;
 }

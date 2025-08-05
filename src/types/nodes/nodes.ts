@@ -17,6 +17,27 @@ export interface Allocation {
     attributes: AllocationAttributes;
 }
 
+export interface AllocationRequest {
+    /**
+     * The ID of the node to create the allocation on
+     */
+    id: number;
+    ip: string;
+    port: Array<string>;
+    alias?: string;
+}
+
+export interface AllocationDeleteRequest {
+    /**
+     * The ID of the node to delete the allocation from
+     */
+    id: number;
+    /**
+     * The ID of the allocation to delete
+     */
+    allocation_id: number;
+}
+
 export interface AllocationResponse {
     data: Allocation[];
 }
@@ -75,6 +96,9 @@ export interface NodeResponse {
 }
 
 export interface NodeIdRequest {
+    /**
+     * The ID of the node to retrieve
+     */
     id?: number;
 };
 

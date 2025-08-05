@@ -7,8 +7,10 @@ import { createNode } from "./nodes/createNode.js";
 import { updateNode } from "./nodes/updateNode.js";
 import { deleteNode } from "./nodes/deleteNode.js";
 import { fetchAllocations } from "./nodes/allocations/fetchAll.js";
+import { deleteAllocation } from "./nodes/allocations/deleteAllocation.js";
+import { createAllocation } from "./nodes/allocations/createAllocation.js";
 
-import { NodeAttributes, NodeUpdateRequest, NodeConfig, NodeIdRequest } from "../types/nodes/nodes.js";
+import { NodeAttributes, NodeUpdateRequest, NodeConfig, NodeIdRequest, AllocationDeleteRequest, AllocationRequest } from "../types/nodes/nodes.js";
 import { AllocationAttributes } from "../types/servers/servers.js";
 import { IncludeParameters } from "../types/enums.js";
 import { PaginationOptions } from "../types/common.js";
@@ -176,6 +178,44 @@ export class NodesModule {
     pagination?: PaginationOptions
   ): Promise<AllocationAttributes[]> {
     return fetchAllocations(this.client, data, pagination);
+  }
+
+  /**
+   * Deletes an allocation from a node.
+   * @param data - The request object containing the node ID and allocation ID to delete.
+   * @example
+   * ```ts
+   * //deleting an allocation from a node
+   * const isDeleted = await ptero.nodes.deleteAllocation({ id: 1, allocation_id: 123 });
+   * console.log("Allocation Deleted:", isDeleted);
+   * ```
+   * @returns {Promise<boolean>} - A promise that resolves to true if the allocation was successfully deleted, otherwise false.
+   */
+  deleteAllocation(
+    data: AllocationDeleteRequest
+  ): Promise<boolean> {
+    return deleteAllocation(this.client, data);
+  }
+
+  /**
+   * 
+   * @param data - The request object containing the node ID and allocation details to create.
+   * @example
+   * ```ts
+   * //creating an allocation on a node
+   * const isCreated = await ptero.nodes.createAllocation({
+   *  id: 1,
+   *  ip: "127.0.0.1",
+   *  port: ["8080"],
+   * });
+   * console.log("Allocation Created:", isCreated);
+   * ```
+   * @returns {Promise<boolean>} - A promise that resolves to true if the allocation was successfully created, otherwise false.
+   */
+  createAllocation(
+    data: AllocationRequest
+  ): Promise<boolean> {
+    return createAllocation(this.client, data);
   }
 
 }

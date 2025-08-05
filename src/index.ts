@@ -57,7 +57,9 @@ export {
   NodeAttributes,
   NodeIdRequest,
   NodeConfig,
-  NodeUpdateRequest
+  NodeUpdateRequest,
+  AllocationDeleteRequest,
+  AllocationRequest
 } from "./types/nodes/nodes.js";
 export {
   IncludeParameters,

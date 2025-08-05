@@ -11,7 +11,6 @@ export async function fetchAllocations(
 ): Promise<AllocationAttributes[]> {
   const http = await client.http();
   const paginationString = paginationBuilder(pagination);
-  console.log(`/application/nodes/${data.id}/allocations${paginationString}`)
 
   const response = await http.get<AllocationResponse>(
     `/application/nodes/${data.id}/allocations${paginationString}`

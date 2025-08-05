@@ -9,7 +9,11 @@ export async function deleteNode(
     throw new Error("Node ID is required to delete a node.");
   }
   const http = await client.http();
-  await http.delete<void>(`/application/nodes/${data.id}`);
+  const response = await http.delete<void>(`/application/nodes/${data.id}`);
+
+  if (response.status !== 204) {
+    throw new Error("Failed to delete node.");
+  }
 
   return true;
 }

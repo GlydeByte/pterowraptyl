@@ -21,6 +21,7 @@ export enum IncludeParameters {
     VARIABLES = "variables",
     NODES = "nodes",
     DATABASES = "databases",
+    BACKUPS = "backups",
     HOST = "host",
     CONFIG = "config",
     SCRIPT = "script"
@@ -30,10 +31,15 @@ export enum FilterParameters {
     EMAIL = "email",
     UUID = "uuid",
     USERNAME = "username",
+    NAME = "name",
+    IMAGE = "image",
     EXTERNAL_ID = "external_id"
 };
 
 export enum SortParameters {
     ID = "id",
-    UUID = "uuid"
+    UUID = "uuid",
+    NAME = "name",
+    CREATED_AT = "created_at",
+    UPDATED_AT = "updated_at"
 }

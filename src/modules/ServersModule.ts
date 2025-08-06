@@ -4,6 +4,9 @@ import {
   FilterParameters,
   SortParameters,
 } from "../types/enums.js";
+import { PaginationOptions } from "../types/common.js";
+import { fetchAll } from "./app/servers/fetchAll.js";
+import { ServerAttributes } from "../types/servers/servers.js";
 
 
 /**
@@ -15,6 +18,21 @@ export class ServersModule {
     if (!this.client) {
       throw new Error("PteroApp is required.");
     }
+  }
+
+  fetchAll(
+    sort?: SortParameters,
+    include?: IncludeParameters[],
+    filter?: Record<FilterParameters, string>,
+    pagination?: PaginationOptions
+  ): Promise<ServerAttributes[]> {
+    return fetchAll(
+      this.client,
+      sort,
+      include,
+      filter,
+      pagination
+    );
   }
 
 }

@@ -1,8 +1,8 @@
-import { PteroApp } from "../../../core/client.js";
+import { PteroApp } from "../../../../core/client.js";
 import {
   AllocationRequest,
-} from "../../../types/nodes/nodes.js";
-import { Allocation, AllocationAttributes } from "../../../types/servers/servers.js";
+} from "../../../../types/nodes/nodes.js";
+import { Allocation, AllocationAttributes } from "../../../../types/servers/servers.js";
 
 export async function createAllocation(
     client: PteroApp,

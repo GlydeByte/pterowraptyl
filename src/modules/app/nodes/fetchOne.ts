@@ -1,11 +1,11 @@
-import { PteroApp } from "../../core/client.js";
+import { PteroApp } from "../../../core/client.js";
 import {
   NodeIdRequest,
   NodeAttributes,
   Node,
-} from "../../types/nodes/nodes.js";
-import { includeBuilder } from "../../utils/builders.js";
-import { IncludeParameters } from "../../types/enums.js";
+} from "../../../types/nodes/nodes.js";
+import { includeBuilder } from "../../../utils/builders.js";
+import { IncludeParameters } from "../../../types/enums.js";
 
 export async function fetchOne(
   client: PteroApp,

@@ -1,5 +1,5 @@
-import { PteroApp } from "../../core/client.js";
-import { UserIdRequest, User } from "../../types/users/users.js";
+import { PteroApp } from "../../../core/client.js";
+import { UserIdRequest, User } from "../../../types/users/users.js";
 
 export async function deleteUser(
   client: PteroApp,

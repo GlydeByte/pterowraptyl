@@ -10,6 +10,7 @@ export class PteroError extends Error {
   public readonly errorName: string;
   public readonly errorDetails: string;
   public readonly statusCode: number;
+  public readonly errorData: PteroErrorData | undefined;
 
   constructor(axiosError: AxiosError<unknown, any>) {
     let errorName = "API Error";
@@ -34,6 +35,7 @@ export class PteroError extends Error {
     this.errorName = errorName;
     this.errorDetails = errorDetails;
     this.statusCode = statusCode;
+    this.errorData = errorData?.data?.errors ? errorData.data.errors[0] : undefined;
 
     // Maintains proper stack trace for where our error was thrown
     if (Error.captureStackTrace) {

@@ -1,14 +1,14 @@
-import { PteroApp } from "../../core/client.js";
+import { PteroApp } from "../../../core/client.js";
 import {
   IncludeParameters
-} from "../../types/enums.js";
-import { PaginationOptions } from "../../types/common.js";
-import { NodeAttributes, NodeResponse } from "../../types/nodes/nodes.js";
+} from "../../../types/enums.js";
+import { PaginationOptions } from "../../../types/common.js";
+import { NodeAttributes, NodeResponse } from "../../../types/nodes/nodes.js";
 import {
   includeBuilder,
   paginationBuilder,
   queryBuilder,
-} from "../../utils/builders.js";
+} from "../../../utils/builders.js";
 
 export async function fetchAll(
   client: PteroApp,

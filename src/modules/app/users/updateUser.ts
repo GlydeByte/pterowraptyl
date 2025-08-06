@@ -1,9 +1,9 @@
-import { PteroApp } from "../../core/client.js";
+import { PteroApp } from "../../../core/client.js";
 import {
   UserUpdateRequest,
   User,
   UserAttributes,
-} from "../../types/users/users.js";
+} from "../../../types/users/users.js";
 
 export async function updateUser(
   client: PteroApp,

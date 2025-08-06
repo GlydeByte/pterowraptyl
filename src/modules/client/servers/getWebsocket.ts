@@ -1,5 +1,5 @@
-import { PteroClient } from "../../core/client.js";
-import { IdentifierRequest, Websocket, WebsocketResponse } from "../../types/servers/servers.js";
+import { PteroClient } from "../../../core/client.js";
+import { IdentifierRequest, Websocket, WebsocketResponse } from "../../../types/servers/servers.js";
 
 
 export async function getWebsocket(client: PteroClient, data: IdentifierRequest): Promise<Websocket> {

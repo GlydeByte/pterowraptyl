@@ -1,5 +1,5 @@
-import { PteroApp } from "../../core/client.js";
-import { NodeIdRequest } from "../../types/nodes/nodes.js";
+import { PteroApp } from "../../../core/client.js";
+import { NodeIdRequest } from "../../../types/nodes/nodes.js";
 
 export async function deleteNode(
   client: PteroApp,

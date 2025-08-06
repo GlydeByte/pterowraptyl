@@ -1,14 +1,14 @@
 import { PteroApp } from "../core/client.js";
 
-import { fetchAll } from "./nodes/fetchAll.js";
-import { fetchOne } from "./nodes/fetchOne.js";
-import { fetchConfiguration } from "./nodes/fetchConfiguration.js";
-import { createNode } from "./nodes/createNode.js";
-import { updateNode } from "./nodes/updateNode.js";
-import { deleteNode } from "./nodes/deleteNode.js";
-import { fetchAllocations } from "./nodes/allocations/fetchAll.js";
-import { deleteAllocation } from "./nodes/allocations/deleteAllocation.js";
-import { createAllocation } from "./nodes/allocations/createAllocation.js";
+import { fetchAll } from "./app/nodes/fetchAll.js";
+import { fetchOne } from "./app/nodes/fetchOne.js";
+import { fetchConfiguration } from "./app/nodes/fetchConfiguration.js";
+import { createNode } from "./app/nodes/createNode.js";
+import { updateNode } from "./app/nodes/updateNode.js";
+import { deleteNode } from "./app/nodes/deleteNode.js";
+import { fetchAllocations } from "./app/nodes/allocations/fetchAll.js";
+import { deleteAllocation } from "./app/nodes/allocations/deleteAllocation.js";
+import { createAllocation } from "./app/nodes/allocations/createAllocation.js";
 
 import { NodeAttributes, NodeUpdateRequest, NodeConfig, NodeIdRequest, AllocationDeleteRequest, AllocationRequest } from "../types/nodes/nodes.js";
 import { AllocationAttributes } from "../types/servers/servers.js";

@@ -6,11 +6,11 @@ import {
 } from "../types/enums.js";
 import { PaginationOptions } from "../types/common.js";
 import { UserAttributes, UserUpdateRequest, UserIdRequest, UserRequest } from "../types/users/users.js";
-import { fetchAll } from "./users/fetchAll.js";
-import { fetchOne } from "./users/fetchOne.js";
-import { createUser } from "./users/createUser.js";
-import { updateUser } from "./users/updateUser.js";
-import { deleteUser } from "./users/deleteUser.js";
+import { fetchAll } from "./app/users/fetchAll.js";
+import { fetchOne } from "./app/users/fetchOne.js";
+import { createUser } from "./app/users/createUser.js";
+import { updateUser } from "./app/users/updateUser.js";
+import { deleteUser } from "./app/users/deleteUser.js";
 
 
 /**

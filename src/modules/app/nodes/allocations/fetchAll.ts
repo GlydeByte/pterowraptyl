@@ -1,8 +1,8 @@
-import { PteroApp } from "../../../core/client.js";
-import { PaginationOptions } from "../../../types/common.js";
-import { NodeIdRequest, AllocationResponse } from "../../../types/nodes/nodes.js";
-import { AllocationAttributes } from "../../../types/servers/servers.js";
-import { paginationBuilder } from "../../../utils/builders.js";
+import { PteroApp } from "../../../../core/client.js";
+import { PaginationOptions } from "../../../../types/common.js";
+import { NodeIdRequest, AllocationResponse } from "../../../../types/nodes/nodes.js";
+import { AllocationAttributes } from "../../../../types/servers/servers.js";
+import { paginationBuilder } from "../../../../utils/builders.js";
 
 export async function fetchAllocations(
   client: PteroApp,

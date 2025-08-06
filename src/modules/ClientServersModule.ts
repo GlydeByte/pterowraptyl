@@ -5,10 +5,10 @@ import {
   Websocket,
   ServerResources
 } from "../types/servers/servers.js";
-import { getServer } from "./servers/getServer.js";
+import { getServer } from "./client/servers/getServer.js";
 import { IncludeParameters } from "../types/enums.js";
-import { getWebsocket } from "./servers/getWebsocket.js";
-import { getUsage } from "./servers/getUsage.js";
+import { getWebsocket } from "./client/servers/getWebsocket.js";
+import { getUsage } from "./client/servers/getUsage.js";
 
 export class ClientServersModule {
   constructor(private client: PteroClient) {

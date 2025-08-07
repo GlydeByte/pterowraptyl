@@ -9,16 +9,22 @@ import { fetchAll } from "./app/servers/fetchAll.js";
 import { fetchOne } from "./app/servers/fetchOne.js";
 import { createServer } from "./app/servers/createServer.js";
 import { deleteServer } from "./app/servers/deleteServer.js";
+import { updateServer } from "./app/servers/updateServer.js";
 import {
   Server,
   ServerAttributes,
   ServerIdRequest,
   CreateServerRequest,
   ReinstallServerRequest,
+  ServerUpdateRequest,
+  ServerBuildUpdateRequest,
+  ServerStartupUpdateRequest,
 } from "../types/servers/servers.js";
 import { reinstallServer } from "./app/servers/reinstallServer.js";
 import { unsuspendServer } from "./app/servers/unsuspendServer.js";
 import { suspendServer } from "./app/servers/suspendServer.js";
+import { updateServerBuild } from "./app/servers/updateServerBuild.js";
+import { updateServerStartup } from "./app/servers/updateServerStartup.js";
 
 /**
  * Module for accessing Pterodactyl servers endpoints.
@@ -165,5 +171,75 @@ export class ServersModule {
    */
   unsuspendServer(data: ServerIdRequest): Promise<boolean> {
     return unsuspendServer(this.client, data);
+  }
+
+  /**
+   * Updates a server with the provided data.
+   * @param data - The request data for updating the server.
+   * @example
+   * ```ts
+   * const updatedServer = await ptero.servers.updateServer({
+   *   id: 1,
+   *   name: "Updated Server Name",
+   *   description: "Updated description."
+   * });
+   * console.log(updatedServer);
+   * ```
+   * @returns A promise that resolves to the updated server attributes.
+   */
+  updateServer(data: ServerUpdateRequest): Promise<ServerAttributes> {
+    return updateServer(this.client, data);
+  }
+
+    /**
+   * Updates a server's build configuration including resource limits and feature limits.
+   * @param data - The request data for updating the server build.
+   * @example
+   * ```ts
+   * const updatedServer = await ptero.servers.updateServerBuild({
+   *   id: 1,
+   *   allocation: 1,
+   *   memory: 2048,
+   *   swap: 0,
+   *   disk: 4096,
+   *   io: 500,
+   *   cpu: 200,
+   *   feature_limits: {
+   *     databases: 5,
+   *     allocations: 2,
+   *     backups: 10
+   *   }
+   * });
+   * console.log(updatedServer);
+   * ```
+   * @returns A promise that resolves to the updated server attributes.
+   */
+  updateServerBuild(data: ServerBuildUpdateRequest): Promise<ServerAttributes> {
+    return updateServerBuild(this.client, data);
+  }
+
+    /**
+   * Updates a server's startup configuration including startup command and environment variables.
+   * @param data - The request data for updating the server startup.
+   * @example
+   * ```ts
+   * const updatedServer = await ptero.servers.updateServerStartup({
+   *   id: 1,
+   *   startup: "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
+   *   environment: {
+   *     MINECRAFT_VERSION: "1.19.4",
+   *     SERVER_JARFILE: "server.jar",
+   *     BUILD_TYPE: "recommended"
+   *   },
+   *   egg: 5,
+   *   image: "quay.io/pterodactyl/core:java",
+   *   skip_scripts: false
+   * });
+   * console.log(updatedServer);
+   * ```
+   * @returns A promise that resolves to the updated server attributes.
+   */
+  updateServerStartup(data: ServerStartupUpdateRequest): Promise<ServerAttributes> {
+    return updateServerStartup(this.client, data);
   }
 }

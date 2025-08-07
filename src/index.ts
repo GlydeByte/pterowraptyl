@@ -1,4 +1,4 @@
-import { PteroClient, PteroApp } from "./core/client.js"; 
+import { PteroClient, PteroApp } from "./core/client.js";
 import { AccountsModule } from "./modules/AccountsModule.js";
 import { ClientServersModule } from "./modules/ClientServersModule.js";
 import { EggsModule } from "./modules/EggsModule.js";
@@ -51,7 +51,10 @@ export {
   CreateServerAllocation,
   CreateServerFeatureLimits,
   CreateServerLimits,
-  ReinstallServerRequest
+  ReinstallServerRequest,
+  ServerUpdateRequest,
+  ServerBuildUpdateRequest,
+  ServerStartupUpdateRequest
 } from "./types/servers/servers.js";
 export {
   User,
@@ -67,7 +70,7 @@ export {
   NodeConfig,
   NodeUpdateRequest,
   AllocationDeleteRequest,
-  AllocationRequest
+  AllocationRequest,
 } from "./types/nodes/nodes.js";
 export {
   IncludeParameters,

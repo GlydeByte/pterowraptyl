@@ -10,7 +10,6 @@ export async function updateNode(
   data: NodeUpdateRequest
 ): Promise<NodeAttributes> {
   const { id, ...updateData } = data;
-  console.log(updateData);
   const http = await client.http();
   const response = await http.patch<Node>(
     `/application/nodes/${id}`,

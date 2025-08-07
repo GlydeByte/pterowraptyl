@@ -8,6 +8,14 @@ export interface ServerLimits {
     cpu: number;
 }
 
+export interface ServerUpdateRequest {
+    id: number;
+    user_id: number;
+    name?: string;
+    external_id?: string;
+    description?: string;
+}
+
 export interface ReinstallServerRequest {
     id: number;
     force?: boolean;
@@ -157,4 +165,32 @@ export interface CreateServerRequest {
     dedicated_ip: boolean;
     port_range: string[];
   };
+}
+
+export interface ServerBuildUpdateRequest {
+  id: number;
+  allocation: number;
+  memory: number;
+  swap: number;
+  disk: number;
+  io: number;
+  cpu: number;
+  threads?: string;
+  feature_limits: {
+    databases: number;
+    allocations: number;
+    backups: number;
+  };
+  add_allocations?: number[];
+  remove_allocations?: number[];
+  oom_disabled?: boolean;
+}
+
+export interface ServerStartupUpdateRequest {
+  id: number;
+  startup: string;
+  environment: Record<string, string>;
+  egg: number;
+  image?: string;
+  skip_scripts?: boolean;
 }

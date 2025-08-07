@@ -14,7 +14,7 @@ import {
 } from "../../../utils/builders.js";
 import {
   ServerAttributes,
-  ServerResponse,
+  ServerListResponse
 } from "../../../types/servers/servers.js";
 
 export async function fetchAll(
@@ -52,7 +52,13 @@ export async function fetchAll(
   );
 
   const sortString = sortBuilder(
-    [SortParameters.ID, SortParameters.UUID, SortParameters.NAME, SortParameters.CREATED_AT, SortParameters.UPDATED_AT],
+    [
+      SortParameters.ID,
+      SortParameters.UUID,
+      SortParameters.NAME,
+      SortParameters.CREATED_AT,
+      SortParameters.UPDATED_AT,
+    ],
     sort || ""
   );
 
@@ -60,13 +66,14 @@ export async function fetchAll(
   const queryString = queryBuilder([
     includeString,
     filterString,
+    sortString,
     paginationString,
   ]);
 
   const http = await client.http();
-  const response = await http.get<ServerResponse>(
+  const response = await http.get<ServerListResponse>(
     `/application/servers${queryString}`
   );
 
-  return response.data;
+  return response.data.data.map((server) => server.attributes);
 }

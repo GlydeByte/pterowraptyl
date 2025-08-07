@@ -42,6 +42,10 @@ export interface ServerRelationships {
     allocations: AllocationsList;
 }
 
+export interface ServerIdRequest {
+    id: string;
+}
+
 export interface ServerAttributes {
     server_owner: boolean;
     identifier: string;
@@ -56,6 +60,16 @@ export interface ServerAttributes {
     is_installing: boolean;
     relationships: ServerRelationships;
 }
+
+export interface ServerListResponse {
+  object: "list";
+  data: {
+    object: "server";
+    attributes: ServerAttributes;
+  }[];
+}
+
+
 
 export interface ServerMeta {
     is_server_owner: boolean;

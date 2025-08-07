@@ -44,6 +44,7 @@ export {
   AllocationAttributes,
   Websocket,
   ServerResources,
+  ServerIdRequest
 } from "./types/servers/servers.js";
 export {
   User,

@@ -1,3 +1,4 @@
+import { RateLimitInfo } from "./core/rateLimit.js";
 import { PteroClient, PteroApp } from "./core/client.js";
 import { AccountsModule } from "./modules/AccountsModule.js";
 import { ClientServersModule } from "./modules/ClientServersModule.js";
@@ -19,6 +20,8 @@ export { NestsModule } from "./modules/NestsModule.js";
 export { NodesModule } from "./modules/NodesModule.js";
 export { ServersModule } from "./modules/ServersModule.js";
 export { UsersModule } from "./modules/UsersModule.js";
+export { RateLimitManager, RateLimitInfo } from "./core/rateLimit.js";
+export { ClientOptions } from "./core/client.js";
 
 //exports of types
 export { Error } from "./types/errorObjects.js";
@@ -100,31 +103,155 @@ export {
   EggAttributes,
   Egg
 } from "./types/nests/nests.js";
+// ...existing imports...
+
 /**
  * Main class for Pterodactyl API wrapper.
  * Everything is accessible through this class.
  * 
  * @example
+ * ### Basic Usage
  * ```ts
  * import { Ptero, PteroClient, PteroApp } from "ptero-wrapper";
-
-// client is needed to access Pterodactyl API client endpoints such as 2fa, account details, etc.
-// app is needed to access Pterodactyl API app endpoints such as servers, nodes, etc.
-const client = new PteroClient(process.env.BASE_URL,process.env.PTERO_CLIENT_KEY);
-const app = new PteroApp(process.env.BASE_URL, process.env.PTERO_APP_KEY);
-// Ptero is the main class that combines both client and app.
-// It provides methods to access both client and app endpoints in a single instance.
-// You can use it to access both client and app endpoints without having to create separate instances.
-// You can use only client or app or both, depending on your needs.
-// Ptero class provides unified access to both client and app endpoints.
-const ptero = new Ptero(client, app);
-
-main();
-
-async function main() {
-    const account = await ptero.accounts.getAccount();
-    console.log(account);
-}
+ * 
+ * // Client is needed to access Pterodactyl API client endpoints such as 2fa, account details, etc.
+ * // App is needed to access Pterodactyl API app endpoints such as servers, nodes, etc.
+ * const client = new PteroClient(process.env.BASE_URL, process.env.PTERO_CLIENT_KEY);
+ * const app = new PteroApp(process.env.BASE_URL, process.env.PTERO_APP_KEY);
+ * 
+ * // Ptero is the main class that combines both client and app.
+ * // It provides methods to access both client and app endpoints in a single instance.
+ * const ptero = new Ptero(client, app);
+ * 
+ * main();
+ * 
+ * async function main() {
+ *     const account = await ptero.accounts.getAccount();
+ *     console.log(account);
+ * }
+ * ```
+ * 
+ * @example
+ * ### Rate Limiting Configuration
+ * ```ts
+ * import { Ptero, PteroClient, PteroApp } from "ptero-wrapper";
+ * 
+ * // Configure rate limiting options
+ * const client = new PteroClient(
+ *   process.env.BASE_URL, 
+ *   process.env.PTERO_CLIENT_KEY,
+ *   {
+ *     enableAutoRetry: true,  // Automatically retry on 429 errors (default: true)
+ *     maxRetries: 5,          // Maximum retry attempts (default: 3)
+ *     baseDelay: 2000         // Base delay for exponential backoff in ms (default: 1000)
+ *   }
+ * );
+ * 
+ * const app = new PteroApp(
+ *   process.env.BASE_URL, 
+ *   process.env.PTERO_APP_KEY,
+ *   {
+ *     enableAutoRetry: true,
+ *     maxRetries: 3,
+ *     baseDelay: 1500
+ *   }
+ * );
+ * 
+ * const ptero = new Ptero(client, app);
+ * ```
+ * 
+ * @example
+ * ### Monitoring Rate Limits
+ * ```ts
+ * import { Ptero, PteroClient, PteroApp } from "ptero-wrapper";
+ * 
+ * const client = new PteroClient(process.env.BASE_URL, process.env.PTERO_CLIENT_KEY);
+ * const app = new PteroApp(process.env.BASE_URL, process.env.PTERO_APP_KEY);
+ * const ptero = new Ptero(client, app);
+ * 
+ * async function monitorRateLimits() {
+ *   // Check current rate limit status
+ *   const clientRateLimit = ptero.getClientRateLimit();
+ *   const appRateLimit = ptero.getAppRateLimit();
+ * 
+ *   if (clientRateLimit) {
+ *     console.log(`Client API: ${clientRateLimit.remaining}/${clientRateLimit.limit} requests remaining`);
+ *     console.log(`Client API resets at: ${clientRateLimit.resetDate}`);
+ *   }
+ * 
+ *   if (appRateLimit) {
+ *     console.log(`App API: ${appRateLimit.remaining}/${appRateLimit.limit} requests remaining`);
+ *     console.log(`App API resets at: ${appRateLimit.resetDate}`);
+ *   }
+ * 
+ *   // Check if approaching limits
+ *   if (ptero.isClientApproachingRateLimit()) {
+ *     console.warn("Warning: Client API is approaching rate limit!");
+ *   }
+ * 
+ *   if (ptero.isAppApproachingRateLimit()) {
+ *     console.warn("Warning: Application API is approaching rate limit!");
+ *   }
+ * 
+ *   // Make API calls - rate limiting is handled automatically
+ *   try {
+ *     const servers = await ptero.servers.getAllServers();
+ *     console.log(`Found ${servers.data.length} servers`);
+ *   } catch (error) {
+ *     console.error("API call failed:", error);
+ *   }
+ * }
+ * 
+ * // Monitor rate limits every 30 seconds
+ * setInterval(monitorRateLimits, 30000);
+ * ```
+ * 
+ * @example
+ * ### Advanced Rate Limit Handling
+ * ```ts
+ * import { Ptero, PteroClient, PteroApp, RateLimitInfo } from "ptero-wrapper";
+ * 
+ * const client = new PteroClient(process.env.BASE_URL, process.env.PTERO_CLIENT_KEY);
+ * const ptero = new Ptero(client);
+ * 
+ * async function smartAPICall() {
+ *   // Check rate limit before making expensive operations
+ *   const rateLimit = ptero.getClientRateLimit();
+ *   
+ *   if (rateLimit && rateLimit.remaining < 10) {
+ *     const timeUntilReset = rateLimit.resetDate.getTime() - Date.now();
+ *     console.log(`Low on API calls (${rateLimit.remaining} remaining)`);
+ *     console.log(`Waiting ${Math.ceil(timeUntilReset / 1000)}s until reset...`);
+ *     
+ *     // Wait until rate limit resets
+ *     await new Promise(resolve => setTimeout(resolve, timeUntilReset + 1000));
+ *   }
+ * 
+ *   // Now make the API call
+ *   const account = await ptero.accounts.getAccount();
+ *   return account;
+ * }
+ * ```
+ * 
+ * ## Rate Limiting Features
+ * 
+ * - **Automatic tracking**: Rate limit information is automatically extracted from API response headers
+ * - **Smart delays**: The library automatically delays requests when approaching rate limits
+ * - **Exponential backoff**: When rate limits are exceeded (429 errors), requests are retried with exponential backoff
+ * - **Separate tracking**: Client API and Application API rate limits are tracked separately
+ * - **Configurable**: Retry behavior, delays, and maximum attempts can be customized
+ * - **Monitoring**: Current rate limit status and remaining requests are easily accessible
+ * 
+ * ## Rate Limit Information
+ * 
+ * Pterodactyl API implements the following rate limits:
+ * - **Client API**: 240 requests per minute per API key
+ * - **Application API**: 240 requests per minute per API key
+ * 
+ * Rate limit headers returned by the API:
+ * - `X-RateLimit-Limit`: Maximum requests per minute (240)
+ * - `X-RateLimit-Remaining`: Requests remaining in current window
+ * - `X-RateLimit-Reset`: Unix timestamp when the rate limit resets
  */
 export class Ptero {
   private client?: PteroClient;
@@ -161,5 +288,75 @@ export class Ptero {
       this.servers = new ServersModule(this.app);
       this.users = new UsersModule(this.app);
     }
+  }
+
+  /**
+   * Gets current rate limit information for client API.
+   * 
+   * @returns Rate limit information including remaining requests and reset time, or undefined if no requests have been made yet
+   * 
+   * @example
+   * ```ts
+   * const rateLimit = ptero.getClientRateLimit();
+   * if (rateLimit) {
+   *   console.log(`${rateLimit.remaining}/${rateLimit.limit} requests remaining`);
+   *   console.log(`Resets at: ${rateLimit.resetDate}`);
+   * }
+   * ```
+   */
+  getClientRateLimit(): RateLimitInfo | undefined {
+    return this.client?.getRateLimit();
+  }
+
+  /**
+   * Gets current rate limit information for application API.
+   * 
+   * @returns Rate limit information including remaining requests and reset time, or undefined if no requests have been made yet
+   * 
+   * @example
+   * ```ts
+   * const rateLimit = ptero.getAppRateLimit();
+   * if (rateLimit) {
+   *   console.log(`${rateLimit.remaining}/${rateLimit.limit} requests remaining`);
+   *   console.log(`Resets at: ${rateLimit.resetDate}`);
+   * }
+   * ```
+   */
+  getAppRateLimit(): RateLimitInfo | undefined {
+    return this.app?.getRateLimit();
+  }
+
+  /**
+   * Checks if client API is approaching its rate limit (less than 10% remaining).
+   * 
+   * @returns True if approaching rate limit, false otherwise
+   * 
+   * @example
+   * ```ts
+   * if (ptero.isClientApproachingRateLimit()) {
+   *   console.warn("Approaching client API rate limit!");
+   *   // Consider delaying or reducing API calls
+   * }
+   * ```
+   */
+  isClientApproachingRateLimit(): boolean {
+    return this.client?.isApproachingRateLimit() ?? false;
+  }
+
+  /**
+   * Checks if application API is approaching its rate limit (less than 10% remaining).
+   * 
+   * @returns True if approaching rate limit, false otherwise
+   * 
+   * @example
+   * ```ts
+   * if (ptero.isAppApproachingRateLimit()) {
+   *   console.warn("Approaching application API rate limit!");
+   *   // Consider delaying or reducing API calls
+   * }
+   * ```
+   */
+  isAppApproachingRateLimit(): boolean {
+    return this.app?.isApproachingRateLimit() ?? false;
   }
 }

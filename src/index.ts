@@ -91,6 +91,15 @@ export {
   Location,
   LocationUpdateRequest
 } from "./types/locations/locations.js";
+export {
+  NestEggRequest,
+  NestAttributes,
+  NestIdRequest,
+  EggIdRequest,
+  NestRelationships,
+  EggAttributes,
+  Egg
+} from "./types/nests/nests.js";
 /**
  * Main class for Pterodactyl API wrapper.
  * Everything is accessible through this class.

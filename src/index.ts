@@ -50,7 +50,8 @@ export {
   CreateServerRequest,
   CreateServerAllocation,
   CreateServerFeatureLimits,
-  CreateServerLimits
+  CreateServerLimits,
+  ReinstallServerRequest
 } from "./types/servers/servers.js";
 export {
   User,

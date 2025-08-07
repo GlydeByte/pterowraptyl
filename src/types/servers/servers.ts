@@ -8,6 +8,11 @@ export interface ServerLimits {
     cpu: number;
 }
 
+export interface ReinstallServerRequest {
+    id: number;
+    force?: boolean;
+}
+
 export interface ServerFeatureLimits {
     databases: number;
     allocations: number;

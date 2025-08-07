@@ -6,6 +6,29 @@ export interface PteroErrorResponse {
   errors: PteroErrorData[];
 }
 
+/**
+ * Custom error class for handling Pterodactyl API errors.
+ * This class extends the built-in Error class and provides additional
+ * properties for error details, status code, and error data.
+ * @example
+ * ```ts
+ * try {
+ *  // Some API call that may fail
+ * } catch (error) {
+ *   if (error instanceof PteroError) {
+ *     console.error(`Error Name: ${error.errorName}`);
+ *     console.error(`Error Details: ${error.errorDetails}`);
+ *     console.error(`Status Code: ${error.statusCode}`);
+ *     if (error.errorData) {
+ *       console.error(`Error Data: ${JSON.stringify(error.errorData)}`);
+ *     }
+ *   } else {
+ *     console.error("An unexpected error occurred:", error);
+ *   }
+ * }
+ * ```
+ *
+ */
 export class PteroError extends Error {
   public readonly errorName: string;
   public readonly errorDetails: string;
@@ -35,7 +58,7 @@ export class PteroError extends Error {
     this.errorName = errorName;
     this.errorDetails = errorDetails;
     this.statusCode = statusCode;
-    this.errorData = errorData?.data?.errors ? errorData.data.errors[0] : undefined;
+    this.errorData = errorData;
 
     // Maintains proper stack trace for where our error was thrown
     if (Error.captureStackTrace) {

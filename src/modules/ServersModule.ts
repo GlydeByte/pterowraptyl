@@ -7,7 +7,9 @@ import {
 import { PaginationOptions } from "../types/common.js";
 import { fetchAll } from "./app/servers/fetchAll.js";
 import { fetchOne } from "./app/servers/fetchOne.js";
-import { ServerAttributes, ServerIdRequest } from "../types/servers/servers.js";
+import { createServer } from "./app/servers/createServer.js";
+import { deleteServer } from "./app/servers/deleteServer.js";
+import { Server, ServerAttributes, ServerIdRequest, CreateServerRequest } from "../types/servers/servers.js";
 
 
 /**
@@ -55,5 +57,27 @@ export class ServersModule {
     include?: IncludeParameters[]
   ): Promise<ServerAttributes> {
     return fetchOne(this.client, data, include);
+  }
+
+  /**
+   * Creates a new server with the provided data.
+   * @param data - The request data for creating the server.
+   * @returns A promise that resolves to the created server.
+   */
+  createServer(
+    data: CreateServerRequest
+  ): Promise<Server> {
+    return createServer(this.client, data);
+  }
+
+  /**
+   * Deletes a server by its ID.
+   * @param data - The request data containing the server ID.
+   * @returns A promise that resolves to a boolean indicating success.
+   */
+  deleteServer(
+    data: ServerIdRequest
+  ): Promise<boolean> {
+    return deleteServer(this.client, data);
   }
 }

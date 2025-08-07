@@ -115,3 +115,41 @@ export interface ServerResources {
 export interface ServerResourcesResponse {
     attributes: ServerResources;
 };
+
+export interface CreateServerLimits {
+  memory: number;
+  swap: number;
+  disk: number;
+  io: number;
+  cpu: number;
+  threads?: string;
+  oom_disabled?: boolean;
+}
+
+export interface CreateServerFeatureLimits {
+  databases: number;
+  allocations: number;
+  backups: number;
+}
+
+export interface CreateServerAllocation {
+  default: number;
+  additional?: number[];
+}
+
+export interface CreateServerRequest {
+  name: string;
+  user: number;
+  egg: number;
+  docker_image?: string;
+  startup?: string;
+  environment?: Record<string, string>;
+  limits: CreateServerLimits;
+  feature_limits: CreateServerFeatureLimits;
+  allocation: CreateServerAllocation;
+  deploy?: {
+    locations: number[];
+    dedicated_ip: boolean;
+    port_range: string[];
+  };
+}

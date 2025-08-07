@@ -1,4 +1,4 @@
-import { PteroClient, PteroApp } from "./core/client.js";
+import { PteroClient, PteroApp } from "./core/client.js"; 
 import { AccountsModule } from "./modules/AccountsModule.js";
 import { ClientServersModule } from "./modules/ClientServersModule.js";
 import { EggsModule } from "./modules/EggsModule.js";
@@ -9,6 +9,7 @@ import { ServersModule } from "./modules/ServersModule.js";
 import { UsersModule } from "./modules/UsersModule.js";
 
 // exports
+export { PteroError } from "./core/error.js";
 export { PteroClient, PteroApp } from "./core/client.js";
 export { AccountsModule } from "./modules/AccountsModule.js";
 export { ClientServersModule } from "./modules/ClientServersModule.js";
@@ -20,6 +21,7 @@ export { ServersModule } from "./modules/ServersModule.js";
 export { UsersModule } from "./modules/UsersModule.js";
 
 //exports of types
+export { Error } from "./types/errorObjects.js";
 export {
   Account,
   AccountResponse,
@@ -44,7 +46,11 @@ export {
   AllocationAttributes,
   Websocket,
   ServerResources,
-  ServerIdRequest
+  ServerIdRequest,
+  CreateServerRequest,
+  CreateServerAllocation,
+  CreateServerFeatureLimits,
+  CreateServerLimits
 } from "./types/servers/servers.js";
 export {
   User,

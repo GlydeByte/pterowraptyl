@@ -83,6 +83,14 @@ export {
   PaginationOptions,
   PaginationLinks,
 } from "./types/common.js";
+export {
+  CreateLocationRequest,
+  LocationRelationships,
+  LocationAttributes,
+  LocationIdRequest,
+  Location,
+  LocationUpdateRequest
+} from "./types/locations/locations.js";
 /**
  * Main class for Pterodactyl API wrapper.
  * Everything is accessible through this class.

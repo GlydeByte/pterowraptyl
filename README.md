@@ -1,4 +1,4 @@
-# ptero-wrapper
+# Pterowraptyl
 
 A TypeScript wrapper for the Pterodactyl API, providing a simple and type-safe interface for interacting with Pterodactyl servers.
 
@@ -19,7 +19,7 @@ A TypeScript wrapper for the Pterodactyl API, providing a simple and type-safe i
 ## Installation
 
 ```bash
-npm install ptero-wrapper
+npm i pterowraptyl
 ```
 
 ## API Modules

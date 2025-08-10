@@ -32,7 +32,6 @@ npm i pterowraptyl
 - **🏠 Nests** - Nest management
 - **📍 Locations** - Location management
 - **🏷️ Allocations** - Allocation management
-- **🎛️ Databases** - Database management
 
 ### ⚠️ Client API Modules (Limited Implementation)
 - **🌐 Client Servers** - Only basic methods available
